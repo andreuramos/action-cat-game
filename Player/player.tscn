@@ -1,0 +1,82 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Player/player.gd" type="Script" id=1]
+[ext_resource path="res://Player/thorin.png" type="Texture" id=2]
+[ext_resource path="res://Player/thorin-walk1.png" type="Texture" id=3]
+[ext_resource path="res://Player/thorin-walk2.png" type="Texture" id=4]
+[ext_resource path="res://Player/thorin-walk2L.png" type="Texture" id=5]
+[ext_resource path="res://Player/thorin-walk1L.png" type="Texture" id=6]
+[ext_resource path="res://Player/thorinL.png" type="Texture" id=7]
+[ext_resource path="res://Player/thorin-attack1R.png" type="Texture" id=8]
+[ext_resource path="res://Player/thorin-attack2R.png" type="Texture" id=9]
+[ext_resource path="res://Player/thorin-attack3R.png" type="Texture" id=10]
+[ext_resource path="res://Player/thorin-attack4R.png" type="Texture" id=11]
+[ext_resource path="res://Player/thorin-attack2L.png" type="Texture" id=12]
+[ext_resource path="res://Player/thorin-attack3L.png" type="Texture" id=13]
+[ext_resource path="res://Player/thorin-attack4L.png" type="Texture" id=14]
+[ext_resource path="res://Player/thorin-attack1L.png" type="Texture" id=15]
+[ext_resource path="res://Overlap/Hitbox.tscn" type="PackedScene" id=16]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 9.54773
+height = 11.1796
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "attackR",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "walkR",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "walkL",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "standL",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "standR",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 7 ), ExtResource( 15 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "attackL",
+"speed": 10.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=3]
+
+[node name="player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -4.472 )
+rotation = -1.5708
+shape = SubResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -14.8493 )
+frames = SubResource( 2 )
+animation = "attackL"
+
+[node name="Hitbox Pivot" type="Position2D" parent="."]
+position = Vector2( 0, -10 )
+
+[node name="Hitbox" parent="Hitbox Pivot" instance=ExtResource( 16 )]
+position = Vector2( 14.5199, 0 )
+
+[node name="CollisionShape2D" parent="Hitbox Pivot/Hitbox" index="0"]
+position = Vector2( 4, 0 )
+shape = SubResource( 3 )
+
+[editable path="Hitbox Pivot/Hitbox"]

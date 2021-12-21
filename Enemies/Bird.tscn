@@ -1,0 +1,88 @@
+[gd_scene load_steps=30 format=2]
+
+[ext_resource path="res://Enemies/bird-walk2L.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/bird-walk1L.png" type="Texture" id=2]
+[ext_resource path="res://Shadows/shadow-md.png" type="Texture" id=3]
+[ext_resource path="res://Enemies/bird-walk2R.png" type="Texture" id=4]
+[ext_resource path="res://Enemies/bird-walk1R.png" type="Texture" id=5]
+[ext_resource path="res://Overlap/Hurtbox.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Enemies/Bird.gd" type="Script" id=7]
+[ext_resource path="res://stats.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Enemies/bird-walk4R.png" type="Texture" id=9]
+[ext_resource path="res://Enemies/bird-walk3R.png" type="Texture" id=10]
+[ext_resource path="res://Enemies/bird-walk5R.png" type="Texture" id=11]
+[ext_resource path="res://Enemies/bird-walk3L.png" type="Texture" id=12]
+[ext_resource path="res://Enemies/bird-walk4L.png" type="Texture" id=13]
+[ext_resource path="res://Enemies/bird-walk5L.png" type="Texture" id=14]
+[ext_resource path="res://Enemies/bird-die6R.png" type="Texture" id=15]
+[ext_resource path="res://Enemies/bird-die3R.png" type="Texture" id=16]
+[ext_resource path="res://Enemies/bird-die5R.png" type="Texture" id=17]
+[ext_resource path="res://Enemies/bird-die2R.png" type="Texture" id=18]
+[ext_resource path="res://Enemies/bird-die4R.png" type="Texture" id=19]
+[ext_resource path="res://Enemies/bird-die1R.png" type="Texture" id=20]
+[ext_resource path="res://Enemies/bird-die4L.png" type="Texture" id=21]
+[ext_resource path="res://Enemies/bird-die5L.png" type="Texture" id=22]
+[ext_resource path="res://Enemies/bird-die2L.png" type="Texture" id=23]
+[ext_resource path="res://Enemies/bird-die1L.png" type="Texture" id=24]
+[ext_resource path="res://Enemies/bird-die6L.png" type="Texture" id=25]
+[ext_resource path="res://Enemies/bird-die3L.png" type="Texture" id=26]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
+"loop": true,
+"name": "flyL",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 4 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 11 ) ],
+"loop": true,
+"name": "flyR",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 24 ), ExtResource( 23 ), ExtResource( 26 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 25 ) ],
+"loop": false,
+"name": "dieL",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 20 ), ExtResource( 18 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 17 ), ExtResource( 15 ) ],
+"loop": false,
+"name": "dieR",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 5.15634
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 12.5702
+height = 6.85838
+
+[node name="Bird" type="KinematicBody2D"]
+script = ExtResource( 7 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -16 )
+frames = SubResource( 1 )
+animation = "dieL"
+frame = 5
+playing = true
+
+[node name="shadow-md" type="Sprite" parent="."]
+position = Vector2( -0.673119, -13.3507 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Hurtbox" parent="CollisionShape2D" instance=ExtResource( 6 )]
+position = Vector2( 0, -14.4352 )
+
+[node name="CollisionShape2D" parent="CollisionShape2D/Hurtbox" index="0"]
+shape = SubResource( 3 )
+
+[node name="stats" parent="." instance=ExtResource( 8 )]
+max_health = 3
+[connection signal="area_entered" from="CollisionShape2D/Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+[connection signal="no_health" from="stats" to="." method="_on_stats_no_health"]
+
+[editable path="CollisionShape2D/Hurtbox"]

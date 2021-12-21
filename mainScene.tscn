@@ -1,0 +1,55 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Objects/stool.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Objects/wood-tile.png" type="Texture" id=3]
+[ext_resource path="res://Objects/plant.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemies/Bird.tscn" type="PackedScene" id=5]
+
+[node name="mainScene" type="Node2D"]
+
+[node name="background" type="Sprite" parent="."]
+position = Vector2( 160, 90 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 320, 180 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="player" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 113.942, 51.7152 )
+
+[node name="stools" type="YSort" parent="YSort"]
+
+[node name="stool" parent="YSort/stools" instance=ExtResource( 2 )]
+position = Vector2( 197.27, 69.1018 )
+
+[node name="stool2" parent="YSort/stools" instance=ExtResource( 2 )]
+position = Vector2( 187.27, 167.726 )
+
+[node name="stool3" parent="YSort/stools" instance=ExtResource( 2 )]
+position = Vector2( 266.644, 120.397 )
+
+[node name="plants" type="YSort" parent="YSort"]
+
+[node name="Node2D" parent="YSort/plants" instance=ExtResource( 4 )]
+position = Vector2( 32.9093, 136.202 )
+
+[node name="Node2D2" parent="YSort/plants" instance=ExtResource( 4 )]
+position = Vector2( 32.4639, 89.8753 )
+
+[node name="Node2D3" parent="YSort/plants" instance=ExtResource( 4 )]
+position = Vector2( 300.179, 16.1588 )
+
+[node name="Node2D4" parent="YSort/plants" instance=ExtResource( 4 )]
+position = Vector2( 236.035, 131.302 )
+
+[node name="Bird2" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 197.27, 50.2127 )
+direction = "L"
+
+[node name="Bird3" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 171.27, 141.302 )
+
+[node name="Bird" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 93.942, 111.951 )
