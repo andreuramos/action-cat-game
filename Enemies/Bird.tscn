@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Enemies/bird-walk2L.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/bird-walk1L.png" type="Texture" id=2]
@@ -26,6 +26,7 @@
 [ext_resource path="res://Enemies/bird-die1L.png" type="Texture" id=24]
 [ext_resource path="res://Enemies/bird-die6L.png" type="Texture" id=25]
 [ext_resource path="res://Enemies/bird-die3L.png" type="Texture" id=26]
+[ext_resource path="res://Enemies/PlayerDetectionZone.tscn" type="PackedScene" id=27]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -57,6 +58,9 @@ radius = 5.15634
 radius = 12.5702
 height = 6.85838
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 58.959
+
 [node name="Bird" type="KinematicBody2D"]
 script = ExtResource( 7 )
 
@@ -82,7 +86,15 @@ shape = SubResource( 3 )
 
 [node name="stats" parent="." instance=ExtResource( 8 )]
 max_health = 3
+
+[node name="PlayerDetectionZone" parent="." instance=ExtResource( 27 )]
+
+[node name="CollisionShape2D" parent="PlayerDetectionZone" index="0"]
+modulate = Color( 1, 1, 1, 0.207843 )
+shape = SubResource( 4 )
 [connection signal="area_entered" from="CollisionShape2D/Hurtbox" to="." method="_on_Hurtbox_area_entered"]
 [connection signal="no_health" from="stats" to="." method="_on_stats_no_health"]
 
 [editable path="CollisionShape2D/Hurtbox"]
+
+[editable path="PlayerDetectionZone"]

@@ -7,4 +7,5 @@ func _ready():
 	
 
 func _on_Hurtbox_area_entered(area):
-	animation.play("die")
+	if area.name == 'Hitbox':
+		animation.play("die")
